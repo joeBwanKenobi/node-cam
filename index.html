@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #23282b;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script>
+      const socket = io.connect(window.location.host);
+      socket.on("currentimage", image => {
+        const imageEl = document.getElementById("currentimage");
+        imageEl.src = `data:image/jpeg;base64,${image}`;
+      });
+      socket.on("pimage", image => {
+        const pimage = document.getElementById("pimage");
+        pimage.src = `data:image/jpeg;base64, ${image}`;
+      });
+    </script>
+   
+    <title>CCTV</title>
+    <style>
+        html {
+            background-color: #23282b;
+        }
+        div.cam-container {
+            max-width:80%;
+            padding: 0 10%;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+  </head>
+  <body>
+      <button id="piCam">piCam</button>
+      <button id="streetCam">streetCam</button>
+      <div class="cam-container">
+        <img id="currentimage" />
+        <img id="pimage" />
+      </div>
+  </body>
+ <script>
+     function sendId(e) {
+        let url = '/clicked/' + e.target.id;
+        fetch(url, {method: 'POST'})
+                .then((response) => {
+                    if(response.ok) { 
+                        console.log('clicked');
+                        return;
+                    }
+                    throw new Error('click failed');
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+    }
+        var camButtonOne = document.getElementById("piCam");
+        var camButtonTwo = document.getElementById("streetCam"); 
+camButtonOne.addEventListener('click', (e) => sendId(e));
+camButtonTwo.addEventListener('click', (e) => sendId(e));
+    </script>
+</html>
