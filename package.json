@@ -6,9 +6,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^2.0.2",
-    "opencv": "^6.2.0",
     "opencv4nodejs": "^5.5.0",
-    "pi-camera-connect": "^0.2.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},
